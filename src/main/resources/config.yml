@@ -1,0 +1,5 @@
+# AntiCaps v1.0 created by xxBen
+# Specify the amount of capital letters allowed.
+max-capital-letters: 7
+command:
+  permission-node: "anticaps.admin"

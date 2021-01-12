@@ -1,0 +1,6 @@
+anticaps-help:
+  - "&4&lAntiCaps Help"
+  - " &8> &c/anticaps reload &c- &7Reloads configuration"
+  - " &8> &c/anticaps help &c- &7Displays this page"
+no-permission: "&cYou do not have permission to do this"
+reloaded-config: "&cReloaded all configurations"

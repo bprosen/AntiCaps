@@ -1,0 +1,9 @@
+name: AntiCaps
+author: xxBen
+main: me.xxben.anticaps.AntiCaps
+description: Handles caps based on configured amount and automatically adjusts
+version: 1.0
+
+commands:
+  anticaps:
+    description: AntiCaps Command
