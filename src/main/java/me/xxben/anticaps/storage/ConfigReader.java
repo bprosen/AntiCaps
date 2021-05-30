@@ -1,6 +1,6 @@
 package me.xxben.anticaps.storage;
 
-import me.xxben.anticaps.utils.ChatUtils;
+import me.xxben.anticaps.Utils;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ public class ConfigReader {
         FileConfiguration itemsConfig = FileManager.getFileConfig(file);
         String itemValue = itemsConfig.getString(message);
         if (translated)
-            return ChatUtils.translate(itemValue);
+            return Utils.translate(itemValue);
         return itemValue;
     }
 
@@ -26,7 +26,7 @@ public class ConfigReader {
         List<String> stringList = new ArrayList<>();
         for (String msg : itemsConfig.getStringList(message)) {
             if (translated)
-                stringList.add(ChatUtils.translate(msg));
+                stringList.add(Utils.translate(msg));
             else
                 stringList.add(msg);
         }

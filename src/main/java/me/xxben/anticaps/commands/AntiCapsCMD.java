@@ -1,8 +1,9 @@
 package me.xxben.anticaps.commands;
 
+import me.xxben.anticaps.AntiCaps;
 import me.xxben.anticaps.storage.ConfigReader;
 import me.xxben.anticaps.storage.FileLoader;
-import me.xxben.anticaps.utils.ChatUtils;
+import me.xxben.anticaps.Utils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -34,7 +35,7 @@ public class AntiCapsCMD implements CommandExecutor {
     private void runCmds(CommandSender sender, String[] a) {
         if (a.length == 1 && a[0].equalsIgnoreCase("reload")) {
             FileLoader.load();
-            ChatUtils.setMaxLetters();
+            AntiCaps.getManager().refreshConfig();
             sender.sendMessage(ConfigReader.getString("lang", "reloaded-config", true));
         } else if (a.length == 1 && a[0].equalsIgnoreCase("help")) {
             sendHelp(sender);

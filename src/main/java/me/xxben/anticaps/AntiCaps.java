@@ -3,18 +3,18 @@ package me.xxben.anticaps;
 import me.xxben.anticaps.commands.AntiCapsCMD;
 import me.xxben.anticaps.listeners.ChatListener;
 import me.xxben.anticaps.storage.FileLoader;
-import me.xxben.anticaps.utils.ChatUtils;
-import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Logger;
 
-public class AntiCaps extends JavaPlugin implements Listener {
+public class AntiCaps extends JavaPlugin {
 
     private static Plugin plugin;
     private static Logger logger;
+    private static Manager manager;
 
+    @Override
     public void onEnable() {
 
         plugin = this;
@@ -22,15 +22,22 @@ public class AntiCaps extends JavaPlugin implements Listener {
 
         registerListeners();
         registerCommands();
+
         FileLoader.startUp();
-        ChatUtils.setMaxLetters();
+
+        manager = new Manager();
+
         getLogger().info("AntiCaps Enabled");
     }
 
+    @Override
     public void onDisable() {
 
-        plugin = null;
+        manager = null;
+
         getLogger().info("AntiCaps Disabled");
+
+        plugin = null;
     }
 
     private void registerListeners() {
@@ -48,4 +55,6 @@ public class AntiCaps extends JavaPlugin implements Listener {
     public static Logger getLog() {
         return logger;
     }
+
+    public static Manager getManager() { return manager; }
 }

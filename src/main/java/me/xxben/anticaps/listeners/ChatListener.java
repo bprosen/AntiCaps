@@ -1,13 +1,15 @@
 package me.xxben.anticaps.listeners;
 
-import me.xxben.anticaps.utils.ChatUtils;
+import me.xxben.anticaps.AntiCaps;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ChatListener implements Listener {
 
@@ -16,12 +18,13 @@ public class ChatListener implements Listener {
 
         String msg = event.getMessage();
 
-        // Checks if the message is already lowercase (most are) and therefore will not continue.
+        // checks if the message is already lowercase (most are) and therefore will not continue
         if (msg.toLowerCase().equals(msg))
             return;
 
-        // This is what accounts for player names, therefore temporarily setting them to lowercase so it is ignored.
-        List<String> userList = new ArrayList<>();
+        // this is what accounts for player names, therefore temporarily setting them to lowercase so it is ignored
+        Set<String> userList = new HashSet<>();
+
         for (Player player : Bukkit.getOnlinePlayers())
             if (msg.contains(player.getName())) {
                 msg = msg.replace(player.getName(), player.getName().toLowerCase());
@@ -31,22 +34,22 @@ public class ChatListener implements Listener {
         int amountUppercase = 0;
         List<String> newMessageList = new ArrayList<>();
 
-        // Turns the msg into char to check the count of uppercase.
+        // turns the msg into char to check the count of uppercase
         for (char chars : msg.toCharArray()) {
             if (Character.isUpperCase(chars)) {
                 amountUppercase++;
-                if (amountUppercase > ChatUtils.getMaxLetters())
+
+                if (amountUppercase > AntiCaps.getManager().getMaxLetters())
                     chars = Character.toLowerCase(chars);
             }
-            String replaceWord = String.valueOf(chars);
-            newMessageList.add(replaceWord);
+            newMessageList.add(String.valueOf(chars));
         }
 
         String finalMsg = "";
-        for (int i = 0; i < newMessageList.size(); i++)
-            finalMsg = finalMsg + newMessageList.get(i);
+        for (String messageChar : newMessageList)
+            finalMsg += messageChar;
 
-        // After message is remade, any player names stored will now be adjusted before the message is sent.
+        // after message is remade, any player names stored will now be adjusted before the message is sent
         if (!userList.isEmpty())
             for (String userName : userList)
                 finalMsg = finalMsg.replace(userName.toLowerCase(), userName);

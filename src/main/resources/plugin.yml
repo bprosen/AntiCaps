@@ -2,7 +2,7 @@ name: AntiCaps
 author: xxBen
 main: me.xxben.anticaps.AntiCaps
 description: Handles caps based on configured amount and automatically adjusts
-version: 1.0
+version: 2.0
 
 commands:
   anticaps:
