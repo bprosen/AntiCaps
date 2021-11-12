@@ -17,9 +17,10 @@ public class ChatListener implements Listener {
     public void onChat(AsyncPlayerChatEvent event) {
 
         String msg = event.getMessage();
+        int maxUppercase = AntiCaps.getManager().getMaxLetters();
 
-        // checks if the message is already lowercase (most are) and therefore will not continue
-        if (msg.toLowerCase().equals(msg))
+        // checks if the message is already lowercase or less than the amount of max uppercase letters it will not continue
+        if (msg.toLowerCase().equals(msg) || msg.length() <= maxUppercase)
             return;
 
         // this is what accounts for player names, therefore temporarily setting them to lowercase so it is ignored
@@ -32,22 +33,19 @@ public class ChatListener implements Listener {
             }
 
         int amountUppercase = 0;
-        List<String> newMessageList = new ArrayList<>();
+        String finalMsg = "";
 
         // turns the msg into char to check the count of uppercase
         for (char chars : msg.toCharArray()) {
             if (Character.isUpperCase(chars)) {
-                amountUppercase++;
-
-                if (amountUppercase > AntiCaps.getManager().getMaxLetters())
+                // if amount is more than max, lowercase it, otherwise increment
+                if (amountUppercase > maxUppercase)
                     chars = Character.toLowerCase(chars);
+                else
+                    amountUppercase++;
             }
-            newMessageList.add(String.valueOf(chars));
+            finalMsg += chars;
         }
-
-        String finalMsg = "";
-        for (String messageChar : newMessageList)
-            finalMsg += messageChar;
 
         // after message is remade, any player names stored will now be adjusted before the message is sent
         if (!userList.isEmpty())
